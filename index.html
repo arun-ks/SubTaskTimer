@@ -4,50 +4,34 @@
 	<title>Check Point Timer</title>
 <script><!--
 	
-function ResetTimeStampOnClick(btnResetTimeStampDir){
-	var resetTimeStampDir = document.getElementById(btnResetTimeStampDir);
-	resetTimeStampDir.innerHTML = "Reset Time";
-}
-
 function ResetAllCounters(counterPfx){
  var counter = 0, counterDivId;
   for (var i = 0; i < 11; i++) {
   	counterDivId = counterPfx + i ;
-  	counter = document.getElementById(counterDivId);  
-  	counter.innerHTML = 0;     
+  	//counter = document.getElementById(counterDivId);  
+  	//counter.innerHTML = 0;     
+  	document.getElementById(counterDivId).value = "";
   }
 }
 
+
 function SetTimeStampOnClick(counterDiv){
  var counter = document.getElementById(counterDiv);
- var resetTimeStampDir = document.getElementById('btn-resetTimeStampDir');
- if ( resetTimeStampDir.innerHTML == "Reset Time") {
- 	 if ( counter.innerHTML >"0" ) counter.innerHTML = 0;
- } else {
-  	//counter.innerHTML = (new Date()).toISOString().substr(11,22);   //toISOString() gives value as  "2011-10-05T14:48:00.000Z" 	
-  	//var today = new Date();
-    //counter.innerHTML = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();  	
-    counter.innerHTML = getTimeHHMM();
- } 	
- resetTimeStampDir.innerHTML = "Set Time";
+ counter.innerHTML = getTimeHHMM();
+ document.getElementById(counterDiv).value = getTimeHHMM();
 }
-
-
 
 
 function getTimeHHMM()
 {
    var time = new Date();
-   
    var hours = time.getHours();
-   hours=((hours < 10) ? "0" : "") + hours;
    var minutes = time.getMinutes();
+   
+   hours=((hours < 10) ? "0" : "") + hours;
    minutes=((minutes < 10) ? "0" : "") + minutes;
    var timeHHMM = hours + ":" + minutes ;
-   
-   //document.getElementById('timeAsHHMMfunc').innerHTML = timeHHMM;
    return timeHHMM;
-
 }
 
 
@@ -58,21 +42,24 @@ function getTimeHHMM()
 <body>
 	<h1>Time Stamp Check Points</h1>
 <br>
-           <button onclick="SetTimeStampOnClick('btn-counter0')">Get off Bed         : <span id="btn-counter0">0</span></button> <input type="time" max="23:59" id="appt0" name="appt0" required onfocus="(this.value == '') && (this.value = getTimeHHMM())"> <br>
-           <button onclick="SetTimeStampOnClick('btn-counter1')">Reach Drawing Room  : <span id="btn-counter1">0</span></button> <input type="time" max="23:59" id="appt1" name="appt1" required onfocus="(this.value == '') && (this.value = getTimeHHMM())"> <br>
-           <button onclick="SetTimeStampOnClick('btn-counter2')">Leave Drawing Room  : <span id="btn-counter2">0</span></button> <input type="time" max="23:59" id="appt2" name="appt2" required onfocus="(this.value == '') && (this.value = getTimeHHMM())"> <br>
-           <button onclick="SetTimeStampOnClick('btn-counter3')">Out of Home         : <span id="btn-counter3">0</span></button> <input type="time" max="23:59" id="appt3" name="appt3" required onfocus="(this.value == '') && (this.value = getTimeHHMM())"> <br>
-           <button onclick="SetTimeStampOnClick('btn-counter4')">Reach Gym           : <span id="btn-counter4">0</span></button> <input type="time" max="23:59" id="appt4" name="appt4" required onfocus="(this.value == '') && (this.value = getTimeHHMM())"> <br>          
-           <button onclick="SetTimeStampOnClick('btn-counter5')">Out of Gym          : <span id="btn-counter5">0</span></button> <input type="time" max="23:59" id="appt5" name="appt5" required onfocus="(this.value == '') && (this.value = getTimeHHMM())"> <br>
-           <button onclick="SetTimeStampOnClick('btn-counter6')">Reach home          : <span id="btn-counter6">0</span></button> <input type="time" max="23:59" id="appt6" name="appt6" required onfocus="(this.value == '') && (this.value = getTimeHHMM())"> <br>
-           <button onclick="SetTimeStampOnClick('btn-counter7')">Leave Drawing Room  : <span id="btn-counter7">0</span></button> <input type="time" max="23:59" id="appt7" name="appt7" required onfocus="(this.value == '') && (this.value = getTimeHHMM())"> <br>
-           <button onclick="SetTimeStampOnClick('btn-counter8')">Out of Home         : <span id="btn-counter8">0</span></button> <input type="time" max="23:59" id="appt8" name="appt8" required onfocus="(this.value == '') && (this.value = getTimeHHMM())"> <br>
-           <button onclick="SetTimeStampOnClick('btn-counter9')">Reach Office parking: <span id="btn-counter9">0</span></button> <input type="time" max="23:59" id="appt9" name="appt9" required onfocus="(this.value == '') && (this.value = getTimeHHMM())"> <br>
-          <button onclick="SetTimeStampOnClick('btn-counter10')">In office           : <span id="btn-counter10">0</span></button><input type="time" max="23:59" id="appt10" name="appt10" required onfocus="(this.value == '') && (this.value = getTimeHHMM())"> <br>
+           <button onclick="SetTimeStampOnClick('btn-counter0')">Get off Bed         </button> <input type="time" max="23:59"  id="btn-counter0" ><br>           
+           <button onclick="SetTimeStampOnClick('btn-counter1')">Reach Drawing Room  </button> <input type="time" max="23:59"  id="btn-counter1" ><br>
+           <button onclick="SetTimeStampOnClick('btn-counter2')">Leave Drawing Room  </button> <input type="time" max="23:59"  id="btn-counter2" ><br>
+           <button onclick="SetTimeStampOnClick('btn-counter3')">Out of Home         </button> <input type="time" max="23:59"  id="btn-counter3" ><br>
+           <button onclick="SetTimeStampOnClick('btn-counter4')">Reach Gym           </button> <input type="time" max="23:59"  id="btn-counter4" ><br>          
+           <button onclick="SetTimeStampOnClick('btn-counter5')">Out of Gym          </button> <input type="time" max="23:59"  id="btn-counter5" ><br>
+           <button onclick="SetTimeStampOnClick('btn-counter6')">Reach home          </button> <input type="time" max="23:59"  id="btn-counter6" ><br>
+           <button onclick="SetTimeStampOnClick('btn-counter7')">Leave Drawing Room  </button> <input type="time" max="23:59"  id="btn-counter7" ><br>
+           <button onclick="SetTimeStampOnClick('btn-counter8')">Out of Home         </button> <input type="time" max="23:59"  id="btn-counter8" ><br>
+           <button onclick="SetTimeStampOnClick('btn-counter9')">Reach Office parking</button> <input type="time" max="23:59"  id="btn-counter9" ><br>
+           <button onclick="SetTimeStampOnClick('btn-counter10')">In office          </button> <input type="time" max="23:59"  id="btn-counter10"><br>
 <br><br><br>      
    <button onclick="ResetAllCounters('btn-counter')">Reset All</button> <br>
-   <button onclick="ResetTimeStampOnClick('btn-resetTimeStampDir')">Next click will <span id="btn-resetTimeStampDir">Set Time</span></button> <br>    
 
+
+
+<br>
+<div align="right"><font size="2" color="grey">Buttons update input type text, but are not persistent  </font>  </div>
 
 </body>
 
