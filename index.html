@@ -3,6 +3,22 @@
 	<meta charset="utf-8" />
 	<title>Check Point Timer</title>
 	
+	<style>
+	button { 
+     width:180px; 
+     background-color: #1c3c9f;
+    border: none;
+    color: white;   
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 5px;
+} 
+
+button:hover {background-color: #3e8e41}
+</style>
+
 <script><!--
 	
 function ResetAllCounters(counterPfx){
@@ -61,7 +77,7 @@ function getTimeHHMM(){
            <tr><td><button onclick="SetTimeStampOnClick('btn-counter10')">In office          </button> </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter10"></td></tr>
 </table>
 <br><br><br>      
-   <button onclick="ResetAllCounters('btn-counter')">Reset All</button> <br>
+   <button onclick="ResetAllCounters('btn-counter')">Reset All</button> <br> <br>
    <button onclick="StoreAllCounters('btn-counter')">Store All</button> <br>
 
 
