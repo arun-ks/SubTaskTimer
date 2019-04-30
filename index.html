@@ -5,33 +5,24 @@
 <script><!--
 	
 function ResetAllCounters(counterPfx){
- var counter = 0, counterDivId;
   for (var i = 0; i < 11; i++) {
-  	counterDivId = counterPfx + i ;
-  	//counter = document.getElementById(counterDivId);  
-  	//counter.innerHTML = 0;     
-  	document.getElementById(counterDivId).value = "";
+  	document.getElementById(counterPfx + i).value = "";
   }
 }
 
 
 function SetTimeStampOnClick(counterDiv){
- var counter = document.getElementById(counterDiv);
- counter.innerHTML = getTimeHHMM();
  document.getElementById(counterDiv).value = getTimeHHMM();
 }
-
 
 function getTimeHHMM()
 {
    var time = new Date();
-   var hours = time.getHours();
-   var minutes = time.getMinutes();
+   var hours = time.getHours() , minutes = time.getMinutes();
    
    hours=((hours < 10) ? "0" : "") + hours;
    minutes=((minutes < 10) ? "0" : "") + minutes;
-   var timeHHMM = hours + ":" + minutes ;
-   return timeHHMM;
+   return hours + ":" + minutes ;
 }
 
 
