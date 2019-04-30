@@ -2,26 +2,40 @@
 <head>
 	<meta charset="utf-8" />
 	<title>Check Point Timer</title>
+	
 <script><!--
 	
 function ResetAllCounters(counterPfx){
-  for (var i = 0; i < 11; i++) {
-  	document.getElementById(counterPfx + i).value = "";
+  for (var i = 0; i < 11; i++) {  	
+  	document.getElementById(counterPfx + i).value = "";  	
+  	localStorage.setItem(counterPfx + i, "" );  	
   }
 }
 
-
-function SetTimeStampOnClick(counterDiv){
- document.getElementById(counterDiv).value = getTimeHHMM();
+function InitializeAllCounters(counterPfx){
+  for (var i = 0; i < 11; i++) {
+  	document.getElementById(counterPfx + i).value = localStorage.getItem(counterPfx + i);
+  }
 }
 
-function getTimeHHMM()
-{
+function StoreAllCounters(counterPfx){
+  for (var i = 0; i < 11; i++) {
+  	localStorage.setItem(counterPfx + i, document.getElementById(counterPfx + i).value );  	
+  }
+}
+
+function SetTimeStampOnClick(counterId){
+	localStorage.setItem(counterId, getTimeHHMM());
+  document.getElementById(counterId).value = localStorage.getItem(counterId);
+}
+
+function getTimeHHMM(){
    var time = new Date();
    var hours = time.getHours() , minutes = time.getMinutes();
    
    hours=((hours < 10) ? "0" : "") + hours;
    minutes=((minutes < 10) ? "0" : "") + minutes;
+   localStorage.setItem("lastname", "Smith");
    return hours + ":" + minutes ;
 }
 
@@ -30,7 +44,7 @@ function getTimeHHMM()
 </script>
 </head>
 
-<body>
+<body onload="InitializeAllCounters('btn-counter')">
 	<h1>Time Stamp Check Points</h1>
 <br>
 <table margin="1"> 
@@ -48,7 +62,7 @@ function getTimeHHMM()
 </table>
 <br><br><br>      
    <button onclick="ResetAllCounters('btn-counter')">Reset All</button> <br>
-
+   <button onclick="StoreAllCounters('btn-counter')">Store All</button> <br>
 
 
 <br>
