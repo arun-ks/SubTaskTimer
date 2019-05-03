@@ -64,24 +64,23 @@ function getTimeHHMM(){
 	<h1>Time Stamp Check Points</h1>
 <br>
 <table margin="1"> 
-           <tr><td><button onclick="SetTimeStampOnClick('btn-counter0')">Get off Bed         </button> </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter0" ></td></tr>          
-           <tr><td><button onclick="SetTimeStampOnClick('btn-counter1')">Reach Drawing Room  </button> </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter1" ></td></tr>
-           <tr><td><button onclick="SetTimeStampOnClick('btn-counter2')">Leave Drawing Room  </button> </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter2" ></td></tr>
-           <tr><td><button onclick="SetTimeStampOnClick('btn-counter3')">Out of Home         </button> </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter3" ></td></tr>
-           <tr><td><button onclick="SetTimeStampOnClick('btn-counter4')">Reach Gym           </button> </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter4" ></td></tr>         
-           <tr><td><button onclick="SetTimeStampOnClick('btn-counter5')">Out of Gym          </button> </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter5" ></td></tr>
-           <tr><td><button onclick="SetTimeStampOnClick('btn-counter6')">Reach home          </button> </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter6" ></td></tr>
-           <tr><td><button onclick="SetTimeStampOnClick('btn-counter7')">Leave Drawing Room  </button> </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter7" ></td></tr>
-           <tr><td><button onclick="SetTimeStampOnClick('btn-counter8')">Out of Home         </button> </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter8" ></td></tr>
-           <tr><td><button onclick="SetTimeStampOnClick('btn-counter9')">Reach Office parking</button> </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter9" ></td></tr>
-           <tr><td><button onclick="SetTimeStampOnClick('btn-counter10')">In office          </button> </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter10"></td></tr>
+           <tr><td><button onclick="SetTimeStampOnClick('btn-counter0')">Get off Bed         </button>     </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter0" ></td></tr>          
+           <tr><td><button onclick="SetTimeStampOnClick('btn-counter1')">Reach Drawing Room  </button>     </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter1" ></td></tr>
+           <tr><td><button onclick="SetTimeStampOnClick('btn-counter2')">Leave Drawing Room  </button>     </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter2" ></td></tr>
+           <tr><td><button onclick="SetTimeStampOnClick('btn-counter3')">Out of Home         </button>     </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter3" ></td></tr>
+           <tr><td><button onclick="SetTimeStampOnClick('btn-counter4')">Reach Gym           </button>     </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter4" ></td></tr>         
+           <tr><td><button onclick="SetTimeStampOnClick('btn-counter5')">Out of Gym          </button>     </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter5" ></td></tr>
+           <tr><td><button onclick="SetTimeStampOnClick('btn-counter6')">Reach home          </button>     </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter6" ></td></tr>
+           <tr><td><button onclick="SetTimeStampOnClick('btn-counter7')">Leave Drawing Room  </button>     </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter7" ></td></tr>
+           <tr><td><button onclick="SetTimeStampOnClick('btn-counter8')">Out of Home         </button>     </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter8" ></td></tr>
+           <tr><td><button onclick="SetTimeStampOnClick('btn-counter9')">Reach Office parking</button>     </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter9" ></td></tr>
+           <tr><td><button onclick="SetTimeStampOnClick('btn-counter10')">In office          </button>     </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter10"></td></tr>
+           <tr><td colspan="3">&nbsp;</td></tr>
+           <tr><td colspan="3">&nbsp;</td></tr>
+           <tr><td><button ondblclick="ResetAllCounters('btn-counter')">Double Click to Reset All</button> </td> <td colspan="2"><button onclick="StoreAllCounters('btn-counter')">Store All</button></td></tr>
 </table>
-<br><br><br>      
-   <button onclick="ResetAllCounters('btn-counter')">Reset All</button> <br> <br>
-   <button onclick="StoreAllCounters('btn-counter')">Store All</button> <br>
 
-
-<br>
+<br> <br>
 <div align="right"><font size="2" color="grey">Buttons update input type text, but are not persistent  </font>  </div>
 
 </body>
