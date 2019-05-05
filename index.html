@@ -10,7 +10,7 @@
 	<style>
 	button { 
     width:100%;
-     background-color: #1c3c9f;
+    background-color: #1c3c9f;
     border: none;
     color: white;   
     text-align: center;
@@ -68,7 +68,6 @@ function getTimeHHMM(){
 
 <form class="w3-container">	
    <div class="w3-panel w3-purple"> <p>Time Stamp Check Points</p> </div>   
-<br>
 <table margin="1"> 
            <tr><td><button onclick="SetTimeStampOnClick('btn-counter0')">Get off Bed         </button>     </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter0" ></td></tr>          
            <tr><td><button onclick="SetTimeStampOnClick('btn-counter1')">Reach Drawing Room  </button>     </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter1" ></td></tr>
@@ -83,8 +82,9 @@ function getTimeHHMM(){
            <tr><td><button onclick="SetTimeStampOnClick('btn-counter10')">In office          </button>     </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter10"></td></tr>
            <tr><td colspan="3">&nbsp;</td></tr>
            <tr><td colspan="3">&nbsp;</td></tr>
-           <tr><td><button onclick="ResetAllCounters('btn-counter')">Reset All</button> </td> <td colspan="2"><button onclick="StoreAllCounters('btn-counter')">Store All</button></td></tr>
+	         <tr><td><button onclick="ResetAllCounters('btn-counter')">Reset All</button> </td> <td colspan="2"><button onclick="StoreAllCounters('btn-counter')">Store All</button></td></tr>
 </table>
+   <div class="w3-panel w3-purple"> &nbsp;</div> 
 </form>
 <br> <br>
 <!--div align="right"><font size="2" color="grey">Buttons update input type text, but are not persistent  </font>  </div!-->
