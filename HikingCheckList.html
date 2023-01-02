@@ -1,0 +1,96 @@
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Hiking Checklist</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3mobile.css">
+	
+</style>
+
+<script><!--
+	// -->
+  
+  let boxes = document.getElementsByClassName('box').length;
+  
+  function SaveAllChecks() {	
+    for(let i = 1; i <= boxes; i++){
+  	  var checkbox = document.getElementById(String(i));
+      localStorage.setItem("checkbox" + String(i), checkbox.checked);	
+    }
+  }
+  
+  function ResetAllChecks(){
+    for (var i = 0; i <=boxes; i++) {  	
+         document.getElementById(String(i)).checked = not checked;	
+    }
+  }
+  
+  //for loading
+  for(let i = 1; i <= boxes; i++){
+    if(localStorage.length > 0){
+      var checked = JSON.parse(localStorage.getItem("checkbox" + String(i)));
+      document.getElementById(String(i)).checked = checked;
+    }
+  }
+  window.addEventListener('change', SaveAllChecks);
+
+
+
+
+
+</script>
+</head>
+
+<body onload="InitializeAllChecks('btn-counter')">
+
+<form class="w3-container">	
+   <div class="w3-panel w3-purple"> <p>Hiking Checklist</p> </div>   
+
+<b>Nutrition</b> <br>       
+   <input type="checkbox" id="1" class="box">100+ bottle</input><br>
+   <input type="checkbox" id="2" class="box">Cold water in Can</input><br>
+   <input type="checkbox" id="3" class="box">Cold water in Water-Bag</input><br>
+   <input type="checkbox" id="4" class="box">Bananas</input><br>
+   <input type="checkbox" id="5" class="box">Energy bar</input><br>
+<b>Gear</b> <br>   
+   <input type="checkbox" id="7" class="box">Gloves</input><br>
+   <input type="checkbox" id="8" class="box">Hiking Shoes</input><br>
+   <input type="checkbox" id="9" class="box">Hiking Socks</input><br>
+   <input type="checkbox" id="10" class="box">Mask & Spare</input><br>
+   <input type="checkbox" id="11" class="box">Poncho</input><br>
+   <input type="checkbox" id="12" class="box">Whistle</input><br>
+   <input type="checkbox" id="13" class="box">Mobile & Smartwatch</input><br>
+   <input type="checkbox" id="14" class="box">Hairband</input><br>
+   <input type="checkbox" id="15" class="box">Anti-Mosquito Spray</input><br>
+   <input type="checkbox" id="16" class="box">Cap</input><br>
+   <input type="checkbox" id="17" class="box">Gym Towel</input><br>
+   <input type="checkbox" id="18" class="box">Waterproof bag for Mobile</input><br>
+   <input type="checkbox" id="19" class="box">Plastic bags for emergency</input><br>
+   <input type="checkbox" id="29" class="box">20 RM Cash</input><br>
+<b>Post Hiking</b> <br>   
+   <input type="checkbox" id="21" class="box">2 garbage bags for shoes & Clothes</input><br>
+   <input type="checkbox" id="22" class="box">Water for Washing</input><br>
+   <input type="checkbox" id="23" class="box">Towels</input><br>
+   <input type="checkbox" id="24" class="box">T-Shirt to change</input><br>
+   <input type="checkbox" id="25" class="box">Shorts & Underwear to Change</input><br>
+   <input type="checkbox" id="26" class="box">Mask II</input><br>
+   <input type="checkbox" id="28" class="box">Wallet</input><br>
+  
+   
+   
+<br><button onclick="ResetAllChecks()">Reset All</button>  
+ 
+   <div class="w3-panel w3-purple"> &nbsp;</div> 
+</form>
+<br> <br>
+<!--div align="right"><font size="2" color="grey">Buttons update input type text, but are not persistent  </font>  </div!-->
+
+
+
+
+
+</body>
+
+</html>
