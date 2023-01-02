@@ -19,4 +19,5 @@ The portal stores the timestamp in **local storage**, this means that even if br
 There are buttons to reset the values & to store values in local storage. If timestamps are updated using the input-time textbox, then this store button will need to be used.
 
 
-
+### Hiking Checklist
+This [checklist for Hiking](https://arun-ks.github.io/SubTaskTimer/HikingChecklist.html) not complex enough to deserve a new repositorwhy.
