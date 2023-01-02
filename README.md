@@ -20,4 +20,4 @@ There are buttons to reset the values & to store values in local storage. If tim
 
 
 ### Hiking Checklist
-This [checklist for Hiking](https://arun-ks.github.io/SubTaskTimer/HikingChecklist.html) not complex enough to deserve a new repositorwhy.
+This [checklist for Hiking](https://arun-ks.github.io/SubTaskTimer/HikingCheckList.html) not complex enough to deserve a new repositorwhy.
