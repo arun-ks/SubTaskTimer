@@ -1,94 +1,97 @@
 <html>
-<head>
-	<meta charset="utf-8" />
-	<title>Check Point Timer</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8" />
+    <title>Check Point Timer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3mobile.css">
+    <style>
+      button {
+        width: 100%;
+        background-color: #1c3c9f;
+        border: none;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        cursor: pointer;
+        border-radius: 5px;
+      }
 
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3mobile.css">
-	
-	<style>
-	button { 
-    width:100%;
-    background-color: #1c3c9f;
-    border: none;
-    color: white;   
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    cursor: pointer;
-    border-radius: 5px;
-} 
+      button:hover {
+        background-color: #3e8e41
+      }
+    </style>
+    
+    <script>
+      var counterPfx = "btn-counter";
 
-button:hover {background-color: #3e8e41}
-</style>
+      function ResetAllCounters() {
+        for (var i = 0; i < TaskMilestone.length; i++) {
+          document.getElementById(counterPfx + i).value = "";
+          localStorage.setItem(counterPfx + i, "");
+        }
+      }
 
-<script><!--
-	
-function ResetAllCounters(counterPfx){
-  for (var i = 0; i < 11; i++) {  	
-  	document.getElementById(counterPfx + i).value = "";  	
-  	localStorage.setItem(counterPfx + i, "" );  	
-  }
-}
+      function InitializeAllCounters() {
+        for (var i = 0; i < TaskMilestone.length; i++) {
+          document.getElementById(counterPfx + i).value = localStorage.getItem(counterPfx + i);
+        }
+      }
 
-function InitializeAllCounters(counterPfx){
-  for (var i = 0; i < 11; i++) {
-  	document.getElementById(counterPfx + i).value = localStorage.getItem(counterPfx + i);
-  }
-}
+      function SetTimeStampOnClick(counterId) {
+        localStorage.setItem(counterId, getTimeHHMM());
+        document.getElementById(counterId).value = localStorage.getItem(counterId);
+      }
 
-function StoreAllCounters(counterPfx){
-  for (var i = 0; i < 11; i++) {
-  	localStorage.setItem(counterPfx + i, document.getElementById(counterPfx + i).value );  	
-  }
-}
+      function getTimeHHMM() {
+        const time = new Date();
+        const hours = String(time.getHours()).padStart(2, '0');
+        const minutes = String(time.getMinutes()).padStart(2, '0');
+        return `${hours}:${minutes}`;
+      }
 
-function SetTimeStampOnClick(counterId){
-	localStorage.setItem(counterId, getTimeHHMM());
-  document.getElementById(counterId).value = localStorage.getItem(counterId);
-}
-
-function getTimeHHMM(){
-   var time = new Date();
-   var hours = time.getHours() , minutes = time.getMinutes();
-   
-   hours=((hours < 10) ? "0" : "") + hours;
-   minutes=((minutes < 10) ? "0" : "") + minutes;
-   localStorage.setItem("lastname", "Smith");
-   return hours + ":" + minutes ;
-}
-
-
-// -->
-</script>
-</head>
-
-<body onload="InitializeAllCounters('btn-counter')">
-
-<form class="w3-container">	
-   <div class="w3-panel w3-purple"> <p>Time Stamp Check Points</p> </div>   
-<table margin="1"> 
-           <tr><td><button onclick="SetTimeStampOnClick('btn-counter0')">Get off Bed         </button>     </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter0" ></td></tr>          
-           <tr><td><button onclick="SetTimeStampOnClick('btn-counter1')">Reach Drawing Room  </button>     </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter1" ></td></tr>
-           <tr><td><button onclick="SetTimeStampOnClick('btn-counter2')">Leave Drawing Room  </button>     </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter2" ></td></tr>
-           <tr><td><button onclick="SetTimeStampOnClick('btn-counter3')">Out of Home         </button>     </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter3" ></td></tr>
-           <tr><td><button onclick="SetTimeStampOnClick('btn-counter4')">Reach Gym           </button>     </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter4" ></td></tr>         
-           <tr><td><button onclick="SetTimeStampOnClick('btn-counter5')">Out of Gym          </button>     </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter5" ></td></tr>
-           <tr><td><button onclick="SetTimeStampOnClick('btn-counter6')">Reach home          </button>     </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter6" ></td></tr>
-           <tr><td><button onclick="SetTimeStampOnClick('btn-counter7')">Leave Drawing Room  </button>     </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter7" ></td></tr>
-           <tr><td><button onclick="SetTimeStampOnClick('btn-counter8')">Out of Home         </button>     </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter8" ></td></tr>
-           <tr><td><button onclick="SetTimeStampOnClick('btn-counter9')">Reach Office parking</button>     </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter9" ></td></tr>
-           <tr><td><button onclick="SetTimeStampOnClick('btn-counter10')">In office          </button>     </td><td>:</td><td><input type="time" max="23:59"  id="btn-counter10"></td></tr>
-           <tr><td colspan="3">&nbsp;</td></tr>
-           <tr><td colspan="3">&nbsp;</td></tr>
-	         <tr><td><button onclick="ResetAllCounters('btn-counter')">Reset All</button> </td> <td colspan="2"><button onclick="StoreAllCounters('btn-counter')">Store All</button></td></tr>
-</table>
-   <div class="w3-panel w3-purple"> &nbsp;</div> 
-</form>
-<br> <br>
-<!--div align="right"><font size="2" color="grey">Buttons update input type text, but are not persistent  </font>  </div!-->
-
-</body>
-
+      function ExportAllStepData() {
+        let tlvString = "";
+        for (let i = 0; i < TaskMilestone.length; i++) {
+          const timestamp = localStorage.getItem(`${counterPfx}${i}`) || "NA";
+          tlvString += `${TaskMilestone[i]}=${timestamp},`;
+        }
+        //document.getElementById("tlv-output").value = tlvString.slice(0, -1);
+        document.getElementById("tlv-output").textContent = tlvString.slice(0, -1);
+      }
+    </script>
+  </head>
+  
+  
+  <body onload="InitializeAllCounters()">
+      <div class="w3-panel w3-purple">
+        <p>Time Stamp Check Points</p>
+      </div>
+        <table margin="1">
+            <script>
+                //var TaskMilestone = ["Get off Bed","Reach Drawing Room","Leave Drawing Room","Out of Home","Reach Gym","Out of Gym","Reach home","Leave Drawing Room","Out of Home","Reach Office parking","In office"];
+                var TaskMilestone = ["Leave Home","Reach StationH CarPark","Reach StationH Platform","Train Leaves StationH","Reach StationW Platform","Reach Work","Leave Work","Reach StationW Station","Train Leaves StationW","Reach StationH Platform","Reach Home"];
+                for (var i = 0; i < TaskMilestone.length; i++) {
+                    document.write(`
+                        <tr>
+                            <td><button onclick="SetTimeStampOnClick('${counterPfx}${i}')">${TaskMilestone[i]}</button></td>
+                            <td>:</td>
+                            <td><input type="time" max="23:59" id="${counterPfx}${i}"></td>
+                        </tr>
+                    `);
+                }
+            </script>
+            <tr><td colspan="3">&nbsp;</td> </tr>
+            <tr><td colspan="3">&nbsp;</td></tr>
+            <tr>
+                <td><button onclick="ResetAllCounters()">Reset All</button></td>
+                <td colspan="2"><button onclick="ExportAllStepData()">Make List</button></td>
+            </tr>
+        </table>        
+      <div class="w3-panel w3-purple">&nbsp;</div>
+      <font size="1" color="lightgray"><div id="tlv-output"></div></font>
+    <br>
+    <br>
+  </body>
 </html>
