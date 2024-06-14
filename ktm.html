@@ -1,0 +1,172 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Check Point Timer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3mobile.css">
+    <style>
+      button {
+        width: 100%;
+        background-color: #1c3c9f;
+        border: none;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        cursor: pointer;
+        border-radius: 5px;
+      }
+      button:hover {
+        background-color: #3e8e41
+      }
+    </style>
+    
+    <style>
+        .timestamp {
+            margin: 5px;
+            padding: 5px;
+            border: 1px solid #000;
+            display: inline-block;
+        }
+        .highlight-before {
+            background-color: lightcoral;
+        }
+        .highlight-after {
+            background-color: lightgreen;
+        }
+        .greyed-out {
+            color: grey;
+        }
+    </style>
+    
+    <script>
+      var counterPfx = "ktm-btn-counter";
+      //var TaskMilestone = ["Get off Bed","Reach Drawing Room","Leave Drawing Room","Out of Home","Reach Gym","Out of Gym","Reach home","Leave Drawing Room","Out of Home","Reach Office parking","In office"];
+      var TaskMilestone = ["Leave Home","Reach StationH Stop","Depart StationH","Reach StationW Stop","Reach Work Cubicle","Leave Work Cubicle","Reach StationW Stop","Depart StationW","Reach StationH Stop","Reach Home"];
+
+      function ResetAllCounters() {
+        for (var i = 0; i < TaskMilestone.length; i++) {
+          document.getElementById(counterPfx + i).value = "";
+          localStorage.setItem(counterPfx + i, "");
+        }
+      }
+
+      function InitializeAllCounters() {
+        for (var i = 0; i < TaskMilestone.length; i++) {
+          document.getElementById(counterPfx + i).value = localStorage.getItem(counterPfx + i);
+        }
+      }
+
+      function SetTimeStampOnClick(counterId) {
+        localStorage.setItem(counterId, getTimeHHMM());
+        document.getElementById(counterId).value = localStorage.getItem(counterId);
+      }
+
+      function getTimeHHMM() {
+        const time = new Date();
+        const hours = String(time.getHours()).padStart(2, '0');
+        const minutes = String(time.getMinutes()).padStart(2, '0');
+        return `${hours}:${minutes}`;
+      }
+
+      function ExportAllStepData() {
+        let tlvString = "";
+        for (let i = 0; i < TaskMilestone.length; i++) {
+          const timestamp = localStorage.getItem(`${counterPfx}${i}`) || "NA";
+          tlvString += `${TaskMilestone[i]}=${timestamp},`;
+        }
+        document.getElementById("tlv-output").textContent = tlvString.slice(0, -1);
+      }
+    </script>
+    
+  <script>
+        const SERDANG = "6:30 6:55 7:25 7:58 8:30 9:02 9:32 10:08 11:03 12:18 13:18 14:18 15:23 16:28 17:18 17:48 18:28 19:13 20:03 21:06 22:16 22:48";
+        const MIDVALLEY = "5:39 6:40 7:35 8:05 8:35 9:08 9:35 10:05 10:35 11:35 12:40 13:45 14:45 15:45 16:45 17:35 18:10 18:40 19:20 20:35 21:48 22:48";
+        
+        const parseTime = timeStr => {
+            const [hours, minutes] = timeStr.split(':').map(Number);
+            const date = new Date();
+            date.setHours(hours, minutes, 0, 0);
+            return date;
+        };
+
+        const formatTime = date => {
+            return date.toTimeString().slice(0, 5);
+        };
+
+        const filterTimestamps = (times, currentTime) => {
+            return times.split(' ').map(parseTime).map(time => {
+                const diff = (time - currentTime) / (1000 * 60 * 60);
+                if (diff >= -1 && diff < 0) {
+                    return { time: formatTime(time), highlight: 'highlight-before' };
+                }
+                if (diff >= 0 && diff <= 3) {
+                    return { time: formatTime(time), highlight: 'highlight-after' };
+                }
+                return { time: formatTime(time), highlight: 'greyed-out' };
+            });
+        };
+
+        const createTimestamps = (elementId, times) => {
+            const container = document.getElementById(elementId);
+            const currentTime = new Date();
+
+            filterTimestamps(times, currentTime).forEach(({ time, highlight }) => {
+                const span = document.createElement('span');
+                span.className = 'timestamp ' + highlight;
+                span.textContent = time;
+                span.addEventListener('click', () => {
+                    if (highlight === 'greyed-out') {
+                        span.classList.toggle('greyed-out');
+                    }
+                });
+                container.appendChild(span);
+            });
+        };
+
+
+    </script>    
+    
+  </head>
+  
+  
+  <body onload="InitializeAllCounters()">
+      <div class="w3-panel w3-purple">
+        <p>Time Stamp Check Points</p>
+      </div>
+        <table margin="1">
+            <script>
+                for (var i = 0; i < TaskMilestone.length; i++) {
+                    document.write(`
+                        <tr>
+                            <td><button onclick="SetTimeStampOnClick('${counterPfx}${i}')">${TaskMilestone[i]}</button></td>
+                            <td>:</td>
+                            <td><input type="time" max="23:59" id="${counterPfx}${i}"></td>
+                        </tr>
+                    `);
+                }
+            </script>
+            <tr><td colspan="3">&nbsp;</td> </tr>
+            <tr><td colspan="3">&nbsp;</td></tr>
+            <tr>
+                <td><button onclick="ResetAllCounters()">Reset All</button></td>
+                <td colspan="2"><button onclick="ExportAllStepData()">Export Data</button></td>
+            </tr>
+        </table>        
+      <div class="w3-panel w3-purple">&nbsp;</div>
+      <font size="1" color="lightgray"><div id="tlv-output"></div></font>
+    <br>
+    <br>
+
+    Train Arrival Times at Serdang : <div id="serdang-timestamps"></div>
+    Train Arrival Times at Midvalley : <div id="midvalley-timestamps"></div>    
+    <script>
+    	  createTimestamps('serdang-timestamps', SERDANG);
+        createTimestamps('midvalley-timestamps', MIDVALLEY);
+    	 </script>
+    	
+    
+
+  </body>
+</html>
