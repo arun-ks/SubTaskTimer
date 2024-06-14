@@ -17,7 +17,6 @@
         cursor: pointer;
         border-radius: 5px;
       }
-
       button:hover {
         background-color: #3e8e41
       }
@@ -25,6 +24,8 @@
     
     <script>
       var counterPfx = "btn-counter";
+                //var TaskMilestone = ["Get off Bed","Reach Drawing Room","Leave Drawing Room","Out of Home","Reach Gym","Out of Gym","Reach home","Leave Drawing Room","Out of Home","Reach Office parking","In office"];
+                var TaskMilestone = ["Leave Home","Reach StationH Stop","Depart StationH","Reach StationW Stop","Reach Work Cubicle","Leave Work Cubicle","Reach StationW Stop","Depart StationW","Reach StationH Stop","Reach Home"];
 
       function ResetAllCounters() {
         for (var i = 0; i < TaskMilestone.length; i++) {
@@ -57,7 +58,6 @@
           const timestamp = localStorage.getItem(`${counterPfx}${i}`) || "NA";
           tlvString += `${TaskMilestone[i]}=${timestamp},`;
         }
-        //document.getElementById("tlv-output").value = tlvString.slice(0, -1);
         document.getElementById("tlv-output").textContent = tlvString.slice(0, -1);
       }
     </script>
@@ -70,8 +70,6 @@
       </div>
         <table margin="1">
             <script>
-                //var TaskMilestone = ["Get off Bed","Reach Drawing Room","Leave Drawing Room","Out of Home","Reach Gym","Out of Gym","Reach home","Leave Drawing Room","Out of Home","Reach Office parking","In office"];
-                var TaskMilestone = ["Leave Home","Reach StationH CarPark","Reach StationH Platform","Train Leaves StationH","Reach StationW Platform","Reach Work","Leave Work","Reach StationW Station","Train Leaves StationW","Reach StationH Platform","Reach Home"];
                 for (var i = 0; i < TaskMilestone.length; i++) {
                     document.write(`
                         <tr>
@@ -86,7 +84,7 @@
             <tr><td colspan="3">&nbsp;</td></tr>
             <tr>
                 <td><button onclick="ResetAllCounters()">Reset All</button></td>
-                <td colspan="2"><button onclick="ExportAllStepData()">Make List</button></td>
+                <td colspan="2"><button onclick="ExportAllStepData()">Export Data</button></td>
             </tr>
         </table>        
       <div class="w3-panel w3-purple">&nbsp;</div>
