@@ -19,5 +19,6 @@ The portal stores the timestamp in **local storage**, this means that even if br
 There are buttons to reset the values & to store values in local storage. If timestamps are updated using the input-time textbox, then this store button will need to be used.
 
 
-### Hiking Checklist
-This [checklist for Hiking](https://arun-ks.github.io/SubTaskTimer/HikingCheckList.html) not complex enough to deserve a new repositorwhy.
+### Other Lists which use same infrastructure 
+- A [checklist for Hiking](https://arun-ks.github.io/SubTaskTimer/HikingCheckList.html) 
+- This [time tracker for commute](https://arun-ks.github.io/SubTaskTimer/ktm.html), is customized specifically for a specific route
