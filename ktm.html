@@ -1,7 +1,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Check Point Timer</title>
+    <title>KTM Check Point Timer</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3mobile.css">
@@ -81,7 +81,7 @@
     </script>
     
   <script>
-        const SERDANG = "6:30 6:55 7:25 7:58 8:30 9:02 9:32 10:08 11:03 12:18 13:18 14:18 15:23 16:28 17:18 17:48 18:28 19:13 20:03 21:06 22:16 22:48";
+        const SERDANG   = "6:30 6:55 7:25 7:58 8:30 9:02 9:32 10:08 11:03 12:18 13:18 14:18 15:23 16:28 17:18 17:48 18:28 19:13 20:03 21:06 22:16 22:48";
         const MIDVALLEY = "5:39 6:40 7:35 8:05 8:35 9:08 9:35 10:05 10:35 11:35 12:40 13:45 14:45 15:45 16:45 17:35 18:10 18:40 19:20 20:35 21:48 22:48";
         
         const parseTime = timeStr => {
@@ -148,25 +148,24 @@
                 }
             </script>
             <tr><td colspan="3">&nbsp;</td> </tr>
-            <tr><td colspan="3">&nbsp;</td></tr>
             <tr>
                 <td><button onclick="ResetAllCounters()">Reset All</button></td>
                 <td colspan="2"><button onclick="ExportAllStepData()">Export Data</button></td>
             </tr>
         </table>        
-      <div class="w3-panel w3-purple">&nbsp;</div>
-      <font size="1" color="lightgray"><div id="tlv-output"></div></font>
-    <br>
+      <div class="w3-panel w3-purple"><p>Train Arrival Times&nbsp;</p></div>
     <br>
 
-    Train Arrival Times <a href="https://myrailtime.ktmb.com.my/timetable?origin=19900" target="_blank">at Serdang</a> : <div id="serdang-timestamps"></div>
-    Train Arrival Times <a href="https://myrailtime.ktmb.com.my/timetable?origin=19205" target="_blank">at Midvalley</a> : <div id="midvalley-timestamps"></div>    
+    From <a href="https://myrailtime.ktmb.com.my/timetable?origin=19900" target="_blank">Serdang</a> :   <div id="serdang-timestamps"></div>
+    From <a href="https://myrailtime.ktmb.com.my/timetable?origin=19205" target="_blank">Midvalley</a> : <div id="midvalley-timestamps"></div>    
     <script>
     	  createTimestamps('serdang-timestamps', SERDANG);
         createTimestamps('midvalley-timestamps', MIDVALLEY);
-    	 </script>
-    	
+    </script>  	
     
 
+      <font size="1" color="lightgray"><div id="tlv-output"></div></font>
+    <br>
+    
   </body>
 </html>
