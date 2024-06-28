@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3mobile.css">
+
     <style>
       button {
         width: 100%;
@@ -129,8 +130,7 @@
     </script>    
     
   </head>
-  
-  
+    
   <body onload="InitializeAllCounters()">
       <div class="w3-panel w3-purple">
         <p>Time Stamp Check Points</p>
@@ -162,10 +162,21 @@
     	  createTimestamps('serdang-timestamps', SERDANG);
         createTimestamps('midvalley-timestamps', MIDVALLEY);
     </script>  	
-    
-
-      <font size="1" color="lightgray"><div id="tlv-output"></div></font>
+        <font size="1" color="lightgray"><div id="tlv-output"></div></font>
     <br>
+    
+    <script>   
+    	  // Time taken to reach each station, for future use
+        const TransitMinute = [
+            { station: "Serdang", minutes: 0 },
+            { station: "Bdr Tasek Selatan", minutes: 7 },
+            { station: "Salak Selatan", minutes: 6 },
+            { station: "Seputeh", minutes: 5 },
+            { station: "Midvalley", minutes: 3 }
+        ];  
+     </script>
+  
+    
     
   </body>
 </html>
