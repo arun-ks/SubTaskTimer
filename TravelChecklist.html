@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang='en'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title>Travel Checklist</title>
+<style>
+body { font-family: Arial, sans-serif; margin: 10px; }
+h2 { border-bottom: 2px solid #ccc; padding-bottom: 5px; font-size: 1.2em; }
+table { border-collapse: collapse; width: 100%; margin-bottom: 20px; font-size: 1em; }
+th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+th { background-color: #f0f0f0; }
+@media (max-width: 600px) { th, td { font-size: 0.9em; padding: 6px; } h2 { font-size: 1em; } }
+</style></head><body>
+<h1>Travel Checklist</h1><div id='checklist'></div>
+<script>
+const data = [
+{ group: "Chargers+Electronics", item: "Laptop + Charger + Headphone + Mouse", count: 1, checklist: "InB"},
+{ group: "Chargers+Electronics", item: "OnePlus Mobile + Charger + Headphone", count: 1, checklist: "InB"},
+{ group: "Clothes - Formal", item: "shirts", count: 1, checklist: ""},
+{ group: "Clothes - Formal", item: "socks", count: 1, checklist: ""},
+{ group: "Clothes - Formal", item: "tshirts - Polo", count: 1, checklist: ""},
+{ group: "Clothes - Informal", item: "home bermuda", count: 4, checklist: ""},
+{ group: "Clothes - Informal", item: "homeshirts", count: 8, checklist: ""},
+{ group: "Clothes - Informal", item: "jeans", count: 1, checklist: "OnP"},
+{ group: "Clothes - Informal", item: "shoe", count: 1, checklist: "OnP"},
+{ group: "Clothes - Informal", item: "tshirts", count: 7, checklist: ""},
+{ group: "Clothes - Informal", item: "underwear", count: 9, checklist: ""},
+{ group: "Clothes - Rain", item: "Umbrella/raincoat", count: 1, checklist: ""},
+{ group: "Documents", item: "Aadhar or PAN Card", count: 1, checklist: ""},
+{ group: "Documents", item: "Driving License", count: 1, checklist: ""},
+{ group: "Documents", item: "Passport", count: 2, checklist: ""},
+{ group: "Documents", item: "tickets", count: 1, checklist: ""},
+{ group: "Extra", item: "Local Currency", count: 1, checklist: ""},
+{ group: "Extra", item: "GIFTS  - TSHIRT (SPECIFIC TRIP)", count: 1, checklist: ""},
+{ group: "Extra", item: "GIFTS  - PEN (SPECIFIC TRIP)", count: 1, checklist: ""},
+{ group: "Gym", item: "shorts", count: 1, checklist: ""},
+{ group: "Leisure", item: "Book", count: 1, checklist: ""},
+{ group: "Toileteries", item: "Shaving ", count: 1, checklist: ""},
+{ group: "Toileteries", item: "Toothbrush+ toothpaste", count: 1, checklist: ""},
+];
+function loadState(key) { return localStorage.getItem(key) === 'true'; }
+function saveState(key, value) { localStorage.setItem(key, value); }
+function renderChecklist() {
+    const container = document.getElementById('checklist');
+    container.innerHTML = '';
+    const groups = {};
+    data.forEach(item => { if (!groups[item.group]) groups[item.group] = []; groups[item.group].push(item); });
+    for (const groupName in groups) {
+        const groupHeader = document.createElement('h2'); groupHeader.textContent = groupName; container.appendChild(groupHeader);
+        const table = document.createElement('table');
+        const thead = document.createElement('thead'); thead.innerHTML = '<tr><th>Check</th><th>Item</th><th>Count</th></tr>'; table.appendChild(thead);
+        const tbody = document.createElement('tbody');
+        groups[groupName].forEach(item => {
+            const tr = document.createElement('tr');
+            const tdCheck = document.createElement('td'); const checkbox = document.createElement('input'); checkbox.type = 'checkbox';
+            const storageKey = groupName + '_' + item.item;
+            let saved = localStorage.getItem(storageKey);
+            checkbox.checked = saved === null ? (item.count === 1) : (saved === 'true');
+            checkbox.addEventListener('change', () => saveState(storageKey, checkbox.checked));
+            tdCheck.appendChild(checkbox); tr.appendChild(tdCheck);
+            const tdItem = document.createElement('td'); tdItem.textContent = item.item; if (item.checklist) tdItem.title = item.checklist; tr.appendChild(tdItem);
+            const tdCount = document.createElement('td'); tdCount.textContent = item.count; tr.appendChild(tdCount);
+            tbody.appendChild(tr);
+        });
+        table.appendChild(tbody); container.appendChild(table);
+    }
+}
+renderChecklist();
+</script>
+</body></html>
