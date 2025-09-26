@@ -54,11 +54,16 @@
 
       function ExportAllStepData() {
         let tlvString = "";
-        for (let i = 0; i < TaskMilestone.length; i++) {
-          const timestamp = localStorage.getItem(`${counterPfx}${i}`) || "NA";
-          tlvString += `${TaskMilestone[i]}=${timestamp},`;
+        for (let i = 0; i < TaskMilestone.length; i++) {        	
+          const timestamp = localStorage.getItem(`${counterPfx}${i}`);
+          if ( ! timestamp == "") {
+                  tlvString += `${TaskMilestone[i]}=${timestamp},`;
+          }
         }
-        document.getElementById("tlv-output").textContent = tlvString.slice(0, -1);
+        document.getElementById("tlv-output-0s").textContent = tlvString.slice(0, -1);
+        document.getElementById('tlv-output').value =  tlvString.slice(0, -1);
+        navigator.clipboard.writeText(tlvString.slice(0, -1));
+        
       }
     </script>
   </head>
@@ -88,7 +93,8 @@
             </tr>
         </table>        
       <div class="w3-panel w3-purple">&nbsp;</div>
-      <font size="1" color="lightgray"><div id="tlv-output"></div></font>
+      <font size="1" color="lightgray"><div id="tlv-output-0s"></div></font>
+          <input type="text" id="tlv-output" size=100>
     <br>
     <br>
   </body>
