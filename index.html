@@ -24,8 +24,8 @@
     
     <script>
       var counterPfx = "btn-counter";
-                //var TaskMilestone = ["Get off Bed","Reach Drawing Room","Leave Drawing Room","Out of Home","Reach Gym","Out of Gym","Reach home","Leave Drawing Room","Out of Home","Reach Office parking","In office"];
-                var TaskMilestone = ["Leave Home","Reach StationH Stop","Depart StationH","Reach StationW Stop","Reach Work Cubicle","Leave Work Cubicle","Reach StationW Stop","Depart StationW","Reach StationH Stop","Reach Home"];
+      //var TaskMilestone = ["Get off Bed","Reach Drawing Room","Leave Drawing Room","Out of Home","Reach Gym","Out of Gym","Reach home","Leave Drawing Room","Out of Home","Reach Office parking","In office"];
+      var TaskMilestone = ["Leave Home","Reach StationH","Depart StationH","Reach StationW","Reach Cubicle","Leave Cubicle","Reach StationW","Depart StationW","Reach StationH","Reach Home"];
 
       function ResetAllCounters() {
         for (var i = 0; i < TaskMilestone.length; i++) {
@@ -41,8 +41,13 @@
       }
 
       function SetTimeStampOnClick(counterId) {
-        localStorage.setItem(counterId, getTimeHHMM());
-        document.getElementById(counterId).value = localStorage.getItem(counterId);
+      	if ( ! document.getElementById(counterId).value ) { 
+           localStorage.setItem(counterId, getTimeHHMM());
+           document.getElementById(counterId).value = localStorage.getItem(counterId);
+        } else {
+        	 localStorage.setItem(counterId, document.getElementById(counterId).value);
+          
+        }
       }
 
       function getTimeHHMM() {
@@ -60,7 +65,7 @@
                   tlvString += `${TaskMilestone[i]}=${timestamp},`;
           }
         }
-        document.getElementById("tlv-output-0s").textContent = tlvString.slice(0, -1);
+        //document.getElementById("tlv-output-smallText").textContent = tlvString.slice(0, -1);
         document.getElementById('tlv-output').value =  tlvString.slice(0, -1);
         navigator.clipboard.writeText(tlvString.slice(0, -1));
         
@@ -93,8 +98,8 @@
             </tr>
         </table>        
       <div class="w3-panel w3-purple">&nbsp;</div>
-      <font size="1" color="lightgray"><div id="tlv-output-0s"></div></font>
-          <input type="text" id="tlv-output" size=100>
+      <!--font size="1" color="lightgray"><div id="tlv-output-smallText"></div></font !-->
+      <input type="text" id="tlv-output" size=100>
     <br>
     <br>
   </body>
