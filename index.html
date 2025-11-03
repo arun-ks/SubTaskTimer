@@ -25,16 +25,18 @@
     <script>
       var counterPfx = "btn-counter";
       //var TaskMilestone = ["Get off Bed","Reach Drawing Room","Leave Drawing Room","Out of Home","Reach Gym","Out of Gym","Reach home","Leave Drawing Room","Out of Home","Reach Office parking","In office"];
-      var TaskMilestone = ["Leave Home","Reach StationH","Depart StationH","Reach StationW","Reach Cubicle","Leave Cubicle","Reach StationW","Depart StationW","Reach StationH","Reach Home"];
+      var TaskMilestone = ["Leave Home","Reach StationA","Depart StationA","Reach DestinationB","Depart DestinationB","Reach LocationC","Depart LocationC","Reach TerminalD","Depart TerminalD","Reach StopE","Depart StopE","Reach Home"];
 
       function ResetAllCounters() {
         for (var i = 0; i < TaskMilestone.length; i++) {
           document.getElementById(counterPfx + i).value = "";
           localStorage.setItem(counterPfx + i, "");
         }
+        document.getElementById('tlv-output').value =  "";
+        
       }
 
-      function InitializeAllCounters() {
+      function InitializeAllCounters() {   //Load saved data from localStrage
         for (var i = 0; i < TaskMilestone.length; i++) {
           document.getElementById(counterPfx + i).value = localStorage.getItem(counterPfx + i);
         }
