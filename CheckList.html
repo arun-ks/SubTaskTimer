@@ -1,91 +1,450 @@
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-	<meta charset="utf-8" />
-	<title>Hiking Checklist</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3mobile.css">
-	
-</style>
-
-<script><!--
-	// -->
-  
-  let boxes = document.getElementsByClassName('box').length;
-  
-  function SaveAllChecks() {	
-    for(let i = 1; i <= boxes; i++){
-  	  var checkbox = document.getElementById(String(i));
-      localStorage.setItem("checkbox" + String(i), checkbox.checked);	
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Activity Checklist</title>
+  <style>
+    :root {
+      --bg: #f3f5f9;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --accent: #6d28d9;
+      --accent-soft: #ede9fe;
+      --line: #e5e7eb;
     }
-  }
-  
-  function ResetAllChecks(){
-    for (var i = 0; i <=boxes; i++) {  	
-         document.getElementById(String(i)).checked = not checked;	
-    }
-  }
-  
-  //for loading
-  for(let i = 1; i <= boxes; i++){
-    if(localStorage.length > 0){
-      var checked = JSON.parse(localStorage.getItem("checkbox" + String(i)));
-      document.getElementById(String(i)).checked = checked;
-    }
-  }
-  window.addEventListener('change', SaveAllChecks);
 
+    * { box-sizing: border-box; }
 
-</script>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #eef2ff 0%, var(--bg) 160px);
+      min-height: 100vh;
+    }
+
+    .wrap {
+      max-width: 880px;
+      margin: 24px auto 32px;
+      padding: 0 16px;
+    }
+
+    .panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
+      overflow: hidden;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--line);
+      background: #fcfcff;
+    }
+
+    .activity-picker {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .toolbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-left: auto;
+    }
+
+    .toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    select {
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 14px;
+      background: #fff;
+      color: var(--text);
+      min-width: 150px;
+      outline: none;
+    }
+
+    select:focus {
+      border-color: #8b5cf6;
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 14px;
+      cursor: pointer;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .btn-reset {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .btn-reset:hover {
+      background: #fecaca;
+    }
+
+    .content {
+      padding: 16px 20px 22px;
+    }
+
+    .group {
+      margin-bottom: 18px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .group-title {
+      margin: 0;
+      padding: 10px 14px;
+      font-size: 14px;
+      font-weight: 700;
+      background: var(--accent-soft);
+      color: #4c1d95;
+      border-bottom: 1px solid #ddd6fe;
+    }
+
+    .items {
+      padding: 10px 12px;
+      display: grid;
+      gap: 6px;
+      background: #fff;
+    }
+
+    .item {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      border-radius: 8px;
+      padding: 7px 8px;
+    }
+
+    .item:hover {
+      background: #f9fafb;
+    }
+
+    .item input[type="checkbox"] {
+      transform: translateY(-1px);
+      accent-color: var(--accent);
+    }
+
+    .empty {
+      padding: 20px 0 4px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 560px) {
+      .toolbar {
+        flex-wrap: wrap;
+      }
+
+      .toolbar-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+  </style>
 </head>
+<body>
+  <div class="wrap">
+    <main class="panel">
+      <section class="toolbar">
+        <label class="activity-picker" for="activitySelect">
+          Activity:
+          <select id="activitySelect"></select>
+        </label>
+        <div class="toolbar-actions">
+          <label class="toggle" for="showUncheckedOnly">
+            <input id="showUncheckedOnly" type="checkbox">Show only unchecked
+          </label>
+          <button id="resetBtn" class="btn btn-reset" type="button">Reset All</button>
+        </div>
+      </section>
 
-<form class="w3-container">	
-   <div class="w3-panel w3-purple"> <p>Hiking Checklist</p> </div>   
+      <section class="content" id="checklistContainer"></section>
+    </main>
+  </div>
 
-<b>Nutrition</b> <br>       
-   <input type="checkbox" id="1"  class="box">100+ bottle</input><br>
-   <input type="checkbox" id="2"  class="box">Cold water in Can</input><br>
-   <input type="checkbox" id="3"  class="box">Cold water in Water-Bag</input><br>
-   <input type="checkbox" id="4"  class="box">Bananas</input><br>
-   <input type="checkbox" id="5"  class="box">Energy bar</input><br>
-<b>Gear</b> <br>                  
-   <input type="checkbox" id="7"  class="box">Gloves</input><br>
-   <input type="checkbox" id="8"  class="box">Hiking Shoes</input><br>
-   <input type="checkbox" id="9"  class="box">Hiking Socks</input><br>
-   <input type="checkbox" id="10" class="box">Mask & Spare</input><br>
-   <input type="checkbox" id="11" class="box">Poncho</input><br>
-   <input type="checkbox" id="12" class="box">Whistle</input><br>
-   <input type="checkbox" id="13" class="box">Mobile</input><br>
-   <!--input type="checkbox" id="14" class="box">Hairband,  Smartwatch</input><br!-->   
-   <input type="checkbox" id="15" class="box">Anti-Mosquito Spray</input><br>
-   <input type="checkbox" id="16" class="box">Cap</input><br>
-   <input type="checkbox" id="17" class="box">Gym Towel</input><br>
-   <input type="checkbox" id="18" class="box">Waterproof bag for Mobile</input><br>
-   <input type="checkbox" id="19" class="box">Plastic bags for emergency</input><br>
-   <input type="checkbox" id="20" class="box">20 RM Cash</input><br>
-<b>Post Hiking</b> <br>   
-   <input type="checkbox" id="21" class="box">2 garbage bags for shoes & Clothes</input><br>
-   <input type="checkbox" id="22" class="box">Water for Washing</input><br>
-   <input type="checkbox" id="23" class="box">Towels</input><br>
-   <input type="checkbox" id="24" class="box">T-Shirt to change</input><br>
-   <input type="checkbox" id="25" class="box">Shorts & Underwear to Change</input><br>
-   <input type="checkbox" id="26" class="box">Mask II</input><br>
-   <input type="checkbox" id="28" class="box">Wallet</input><br>
-  
-   
-   
-<br><button onclick="ResetAllChecks()">Reset All</button>  
- 
-   <div class="w3-panel w3-purple"> &nbsp;</div> 
-</form>
-<br> <br>
-<!--div align="right"><font size="2" color="grey">Buttons update input type text, but are not persistent  </font>  </div!-->
+  <script>
+    const checklistData = [
+      { "activity":"Pickleball", "Grouping":"For On Court",          "item":"SPORTS Tshirt" },
+      { "activity":"Pickleball", "Grouping":"For On Court",          "item":"SPORTS Short with big pockets" },
+      { "activity":"Pickleball", "Grouping":"For On Court",          "item":"SPORTS Underwear" },
+      { "activity":"Pickleball", "Grouping":"For On Court",          "item":"SPORTS SOCKS" },
+      { "activity":"Pickleball", "Grouping":"For On Court",          "item":"SPORTS SHOES" },
+      { "activity":"Pickleball", "Grouping":"For On Court",          "item":"Water Bottle" },
+      { "activity":"Pickleball", "Grouping":"After Game",            "item":"Spare TShirt" },
+      { "activity":"Pickleball", "Grouping":"After Game",            "item":"Spare Shorts" },
+      { "activity":"Pickleball", "Grouping":"After Game",            "item":"Slippers" },
+      { "activity":"Pickleball", "Grouping":"After Game",            "item":"Bags for Dirty Clothes" },
+      { "activity":"Pickleball", "Grouping":"After Game",            "item":"Bags for Slippers/Shoes" },
+      { "activity":"Pickleball", "Grouping":"After Game",            "item":"Bag for Office Clothes" },
+      { "activity":"Pickleball", "Grouping":"After Game",            "item":"BIG Towel" },  
 
+      { "activity":"Hiking",     "Grouping":"Nutrition",            "item":"100+ bottle" },
+      { "activity":"Hiking",     "Grouping":"Nutrition",            "item":"Cold water in Can" },
+      { "activity":"Hiking",     "Grouping":"Nutrition",            "item":"Cold water in Water-Bag" },
+      { "activity":"Hiking",     "Grouping":"Nutrition",            "item":"Bananas" },
+      { "activity":"Hiking",     "Grouping":"Nutrition",            "item":"Energy bar" },
+      { "activity":"Hiking",     "Grouping":"Gear",                 "item":"Gloves" },
+      { "activity":"Hiking",     "Grouping":"Gear",                 "item":"Hiking Shoes" },
+      { "activity":"Hiking",     "Grouping":"Gear",                 "item":"Hiking Socks" },
+      { "activity":"Hiking",     "Grouping":"Gear",                 "item":"Mask & Spare" },
+      { "activity":"Hiking",     "Grouping":"Gear",                 "item":"Poncho" },
+      { "activity":"Hiking",     "Grouping":"Gear",                 "item":"Whistle" },
+      { "activity":"Hiking",     "Grouping":"Gear",                 "item":"Mobile" },
+      { "activity":"Hiking",     "Grouping":"Gear",                 "item":"Anti-Mosquito Spray" },
+      { "activity":"Hiking",     "Grouping":"Gear",                 "item":"Cap" },
+      { "activity":"Hiking",     "Grouping":"Gear",                 "item":"Gym Towel" },
+      { "activity":"Hiking",     "Grouping":"Gear",                 "item":"Waterproof bag for Mobile" },
+      { "activity":"Hiking",     "Grouping":"Gear",                 "item":"Plastic bags for emergency" },
+      { "activity":"Hiking",     "Grouping":"Gear",                 "item":"20 RM Cash" },
+      { "activity":"Hiking",     "Grouping":"Post Hiking",          "item":"2 garbage bags for shoes & Clothes" },
+      { "activity":"Hiking",     "Grouping":"Post Hiking",          "item":"Water for Washing" },
+      { "activity":"Hiking",     "Grouping":"Post Hiking",          "item":"Towels" },
+      { "activity":"Hiking",     "Grouping":"Post Hiking",          "item":"T-Shirt to change" },
+      { "activity":"Hiking",     "Grouping":"Post Hiking",          "item":"Shorts & Underwear to Change" },
+      { "activity":"Hiking",     "Grouping":"Post Hiking",          "item":"Mask II" },
+      { "activity":"Hiking",     "Grouping":"Post Hiking",          "item":"Wallet" },
+      
+      { "activity":"Travel",     "Grouping":"Chargers+Electronics",  "item":"Laptop + Charger + Headphone + Mouse" },
+      { "activity":"Travel",     "Grouping":"Chargers+Electronics",  "item":"OnePlus Mobile + Charger + Headphone" },
+      { "activity":"Travel",     "Grouping":"Chargers+Electronics",  "item":"Powerbank + Charger" },
+      { "activity":"Travel",     "Grouping":"Chargers+Electronics",  "item":"Samsung Mobile + Charger" },
+      { "activity":"Travel",     "Grouping":"Chargers+Electronics",  "item":"Samsung Watch + Charger" },
+      { "activity":"Travel",     "Grouping":"Chargers+Electronics",  "item":"Tablet + Charger" },
+      { "activity":"Travel",     "Grouping":"Clothes - Formal",      "item":"Jacket" },
+      { "activity":"Travel",     "Grouping":"Clothes - Formal",      "item":"shirts" },
+      { "activity":"Travel",     "Grouping":"Clothes - Formal",      "item":"shoe" },
+      { "activity":"Travel",     "Grouping":"Clothes - Formal",      "item":"socks" },
+      { "activity":"Travel",     "Grouping":"Clothes - Formal",      "item":"trousers" },
+      { "activity":"Travel",     "Grouping":"Clothes - Formal",      "item":"tshirts - Polo" },
+      { "activity":"Travel",     "Grouping":"Clothes - Informal",    "item":"home bermuda" },
+      { "activity":"Travel",     "Grouping":"Clothes - Informal",    "item":"homeshirts" },
+      { "activity":"Travel",     "Grouping":"Clothes - Informal",    "item":"jeans" },
+      { "activity":"Travel",     "Grouping":"Clothes - Informal",    "item":"shoe" },
+      { "activity":"Travel",     "Grouping":"Clothes - Informal",    "item":"Slippers/Crocs" },
+      { "activity":"Travel",     "Grouping":"Clothes - Informal",    "item":"socks" },
+      { "activity":"Travel",     "Grouping":"Clothes - Informal",    "item":"tshirts" },
+      { "activity":"Travel",     "Grouping":"Clothes - Informal",    "item":"underwear" },
+      { "activity":"Travel",     "Grouping":"Clothes - Rain",        "item":"Mobile raincoat" },
+      { "activity":"Travel",     "Grouping":"Clothes - Rain",        "item":"Umbrella/raincoat" },
+      { "activity":"Travel",     "Grouping":"Clothes - Winter",      "item":"Home Cold Jacket" },
+      { "activity":"Travel",     "Grouping":"Clothes - Winter",      "item":"Medium Cold Jacket" },
+      { "activity":"Travel",     "Grouping":"Clothes - Winter",      "item":"VERY Cold Jacket" },
+      { "activity":"Travel",     "Grouping":"Clothes - Winter",      "item":"Warm Socks" },
+      { "activity":"Travel",     "Grouping":"Documents",             "item":"Aadhar or PAN Card" },
+      { "activity":"Travel",     "Grouping":"Documents",             "item":"Driving License" },
+      { "activity":"Travel",     "Grouping":"Documents",             "item":"Passport" },
+      { "activity":"Travel",     "Grouping":"Documents",             "item":"tickets" },
+      { "activity":"Travel",     "Grouping":"Extra",                 "item":"Local Currency" },
+      { "activity":"Travel",     "Grouping":"Extra",                 "item":"SIM" },
+      { "activity":"Travel",     "Grouping":"Extra",                 "item":"Travel Bag" },
+      { "activity":"Travel",     "Grouping":"Gym",                   "item":"Health Drink" },
+      { "activity":"Travel",     "Grouping":"Gym",                   "item":"Knee guard" },
+      { "activity":"Travel",     "Grouping":"Gym",                   "item":"Shaker" },
+      { "activity":"Travel",     "Grouping":"Gym",                   "item":"shoe" },
+      { "activity":"Travel",     "Grouping":"Gym",                   "item":"shorts" },
+      { "activity":"Travel",     "Grouping":"Gym",                   "item":"socks" },
+      { "activity":"Travel",     "Grouping":"Gym",                   "item":"Sports Bag" },
+      { "activity":"Travel",     "Grouping":"Gym",                   "item":"Swimming Trunk" },
+      { "activity":"Travel",     "Grouping":"Gym",                   "item":"towel" },
+      { "activity":"Travel",     "Grouping":"Gym",                   "item":"tshirts" },
+      { "activity":"Travel",     "Grouping":"Gym",                   "item":"Weighing Machine" },
+      { "activity":"Travel",     "Grouping":"Health",                "item":"Masks" },
+      { "activity":"Travel",     "Grouping":"Health",                "item":"Nose Spray" },
+      { "activity":"Travel",     "Grouping":"Leisure",               "item":"Book" },
+      { "activity":"Travel",     "Grouping":"Leisure",               "item":"harddisk" },
+      { "activity":"Travel",     "Grouping":"Leisure",               "item":"Rubik" },
+      { "activity":"Travel",     "Grouping":"Leisure",               "item":"Selfie Stick" },
+      { "activity":"Travel",     "Grouping":"Souvenir ",             "item":"Souvenir" },
+      { "activity":"Travel",     "Grouping":"Toileteries",           "item":"coconut oil" },
+      { "activity":"Travel",     "Grouping":"Toileteries",           "item":"Comb" },
+      { "activity":"Travel",     "Grouping":"Toileteries",           "item":"hair stuff" },
+      { "activity":"Travel",     "Grouping":"Toileteries",           "item":"moov" },
+      { "activity":"Travel",     "Grouping":"Toileteries",           "item":"perfume" },
+      { "activity":"Travel",     "Grouping":"Toileteries",           "item":"Shaving " },
+      { "activity":"Travel",     "Grouping":"Toileteries",           "item":"Toothbrush+ toothpaste" }
+            
+    ];
 
+    const activitySelect = document.getElementById("activitySelect");
+    const checklistContainer = document.getElementById("checklistContainer");
+    const resetBtn = document.getElementById("resetBtn");
+    const showUncheckedOnly = document.getElementById("showUncheckedOnly");
 
+    const activities = [...new Set(checklistData.map(x => x.activity))];
+    const groupedByActivity = checklistData.reduce((acc, row) => {
+      if (!acc[row.activity]) acc[row.activity] = [];
+      acc[row.activity].push(row);
+      return acc;
+    }, {});
 
+    function getStorageKey(activity) {
+      return "checklistState::" + encodeURIComponent(activity);
+    }
 
+    function makeItemKey(group, item) {
+      return group + "||" + item;
+    }
+
+    function loadState(activity) {
+      try {
+        const raw = localStorage.getItem(getStorageKey(activity));
+        return raw ? JSON.parse(raw) : {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function saveState(activity, state) {
+      localStorage.setItem(getStorageKey(activity), JSON.stringify(state));
+    }
+
+    function getInitialActivity() {
+      const params = new URLSearchParams(window.location.search);
+      const paramActivity = params.get("activity");
+      if (paramActivity && activities.includes(paramActivity)) return paramActivity;
+      return activities[0];
+    }
+
+    function updateUrl(activity) {
+      const url = new URL(window.location.href);
+      url.searchParams.set("activity", activity);
+      history.replaceState(null, "", url.toString());
+    }
+
+    function renderActivities(selected) {
+      activitySelect.innerHTML = "";
+      activities.forEach((activity) => {
+        const option = document.createElement("option");
+        option.value = activity;
+        option.textContent = activity;
+        option.selected = activity === selected;
+        activitySelect.appendChild(option);
+      });
+    }
+
+    function renderChecklist(activity) {
+      const rows = groupedByActivity[activity] || [];
+      checklistContainer.innerHTML = "";
+
+      if (rows.length === 0) {
+        checklistContainer.innerHTML = '<p class="empty">No checklist items for this activity.</p>';
+        return;
+      }
+
+      const state = loadState(activity);
+      const groups = rows.reduce((acc, row) => {
+        if (!acc[row.Grouping]) acc[row.Grouping] = [];
+        acc[row.Grouping].push(row.item);
+        return acc;
+      }, {});
+
+      Object.keys(groups).forEach((groupName) => {
+        const visibleItems = groups[groupName].filter((itemName) => {
+          const key = makeItemKey(groupName, itemName);
+          if (!showUncheckedOnly.checked) return true;
+          return !Boolean(state[key]);
+        });
+
+        if (visibleItems.length === 0) return;
+
+        const groupEl = document.createElement("article");
+        groupEl.className = "group";
+
+        const titleEl = document.createElement("h2");
+        titleEl.className = "group-title";
+        titleEl.textContent = groupName;
+        groupEl.appendChild(titleEl);
+
+        const itemsEl = document.createElement("div");
+        itemsEl.className = "items";
+
+        visibleItems.forEach((itemName) => {
+          const key = makeItemKey(groupName, itemName);
+
+          const label = document.createElement("label");
+          label.className = "item";
+
+          const checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.checked = Boolean(state[key]);
+          checkbox.addEventListener("change", () => {
+            const latest = loadState(activity);
+            latest[key] = checkbox.checked;
+            saveState(activity, latest);
+            if (showUncheckedOnly.checked) {
+              renderChecklist(activity);
+            }
+          });
+
+          const text = document.createElement("span");
+          text.textContent = itemName;
+
+          label.appendChild(checkbox);
+          label.appendChild(text);
+          itemsEl.appendChild(label);
+        });
+
+        groupEl.appendChild(itemsEl);
+        checklistContainer.appendChild(groupEl);
+      });
+
+      if (checklistContainer.children.length === 0) {
+        checklistContainer.innerHTML = '<p class="empty">All items are checked !!</p>';
+      }
+    }
+
+    function setActivity(activity) {
+      renderActivities(activity);
+      renderChecklist(activity);
+      updateUrl(activity);
+    }
+
+    activitySelect.addEventListener("change", () => {
+      setActivity(activitySelect.value);
+    });
+
+    showUncheckedOnly.addEventListener("change", () => {
+      renderChecklist(activitySelect.value);
+    });
+
+    resetBtn.addEventListener("click", () => {
+      const currentActivity = activitySelect.value;
+      localStorage.removeItem(getStorageKey(currentActivity));
+      renderChecklist(currentActivity);
+    });
+
+    setActivity(getInitialActivity());
+  </script>
 </body>
-
 </html>
