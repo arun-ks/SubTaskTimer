@@ -344,6 +344,10 @@
       history.replaceState(null, "", url.toString());
     }
 
+    function updatePageTitle(activity) {
+      document.title = activity + " Checklist";
+    }
+
     function renderActivities(selected) {
       activitySelect.innerHTML = "";
       activities.forEach((activity) => {
@@ -430,6 +434,7 @@
       renderActivities(activity);
       renderChecklist(activity);
       updateUrl(activity);
+      updatePageTitle(activity);
     }
 
     activitySelect.addEventListener("change", () => {
