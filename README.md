@@ -20,5 +20,7 @@ There are buttons to reset the values & to store values in local storage. If tim
 
 
 ### Other Lists which use same infrastructure 
-- A [checklist for Hiking](https://arun-ks.github.io/SubTaskTimer/HikingCheckList.html) 
+- A [checklist for Hiking](https://arun-ks.github.io/SubTaskTimer/CheckList.html?activity=Hiking).
+- A [checklist for Pickleball or Badminton](https://arun-ks.github.io/SubTaskTimer/CheckList.html?activity=Pickleball) 
+- A [checklist for International Travel](https://arun-ks.github.io/SubTaskTimer/CheckList.html?activity=Travel)
 - This [time tracker for KTM commute](https://arun-ks.github.io/SubTaskTimer/ktm.html), is customized specifically for a specific route
